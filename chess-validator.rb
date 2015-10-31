@@ -9,9 +9,10 @@
 # check indicated origin position in board; is there any piece?
 # if YES, can that piece move to the indicated destination?
 #########################################
+require "pry"
 
 class Board
-  attr_reader :board_status, :moves
+  attr_reader :board_status, :moves, :position_satus
 
   def initialize
     @board_status = []
@@ -79,13 +80,14 @@ class Board
   #   return @coordinates
   # end
 
-  def position_satus?(position)
-    if @board_status[position] == "--"
-      puts "It's free!"
-      return true
+  def position_status?(position)
+    if @board_status[position[0]][position[1]] == "--"
+      puts "#{position} is free"
+      return nil
     else
-      puts "Occupied by #{@board_status[position]}"
-      return false
+      puts "Occupied by #{@board_status[position[0]][position[1]]}"
+      status = @board_status[position[0]][position[1]]
+      return status
     end
   end
 end
@@ -108,10 +110,10 @@ class Rook
   end
 end
 
-rook = Rook.new("wB", [7, 0])
+rook = Rook.new("wB", [6, 0])
 board = Board.new
 board.load_board_status
 board.print_board_status
-board.position_free?([7, 0])
-rook.valid_move?(board, [7, 0], [4, 0])
+board.position_status?([7, 0])
+# rook.valid_move?(board, [7, 0], [4, 0])
 board.load_moves
